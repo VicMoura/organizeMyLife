@@ -5,6 +5,8 @@ const app = express();
 app.set('view engine', 'ejs'); 
 app.set('views', 'src/views'); 
 
+//Static 
+app.use(express.static('src/views/public'));
 
 app.get("/", (req, res) => {
     res.render("index");
