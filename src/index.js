@@ -25,6 +25,11 @@ connection.authenticate()
     console.log(error);
 });
 
+//Importando rotas 
+const userRouter = require("./router/UserRouter");
+
+app.use('/', userRouter);
+
 
 app.get("/", (req, res) => {
     res.render("index");
