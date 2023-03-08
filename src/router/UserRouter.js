@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 router.get('/login', (req, res) => {
-    res.render('templates/login');
+    res.render('templates/users/login');
 });
 
 router.get('/cadastro', (req, res) => {
-    res.render('templates/cadastro');
+    res.render('templates/users/cadastro');
 });
 
 

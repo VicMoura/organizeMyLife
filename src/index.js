@@ -27,8 +27,10 @@ connection.authenticate()
 
 //Importando rotas 
 const userRouter = require("./router/UserRouter");
+const adminRouter = require("./router/AdminRouter");
 
 app.use('/', userRouter);
+app.use('/', adminRouter);
 
 
 app.get("/", (req, res) => {
