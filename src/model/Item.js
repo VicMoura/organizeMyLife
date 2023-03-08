@@ -1,22 +1,23 @@
 const Sequelize = require("sequelize"); 
 const connection = require("../../data/database"); 
-const User = require("./User"); 
+const Tarefa = require("./Tarefa"); 
 
-const Tarefa = connection.define('tarefa', {
+
+const Item = connection.define('item', {
     nome : {
         type : Sequelize.STRING, 
         allowNull : false 
     }, 
-    situacao : {
-        type : Sequelize.STRING, 
+
+    check : {
+        type : Sequelize.BOOLEAN, 
         allowNull : false 
     }
 });
 
 //Criando a relação de tabelas - FK
-User.hasMany(Tarefa);  
-Tarefa.belongsTo(User); 
+Tarefa.hasMany(Item);  
+Item.belongsTo(Tarefa); 
 
-Tarefa.sync({force : false});
 
-module.exports = Tarefa;
+module.exports = Item;

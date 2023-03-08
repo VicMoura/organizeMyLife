@@ -25,6 +25,10 @@ connection.authenticate()
     console.log(error);
 });
 
+const User = require("./model/User"); 
+const Tarefa = require("./model/Tarefa"); 
+const Item = require("./model/Item"); 
+
 //Importando rotas 
 const userRouter = require("./router/UserRouter");
 const adminRouter = require("./router/AdminRouter");
