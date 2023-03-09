@@ -37,3 +37,23 @@
 .menuLateral {
     width: 100px;
 }
+
+.user-dados {
+    width : 500px ;
+    height: 500px;
+}
+
+.img-dados{
+    width: 40px;
+    height: 30px;
+}
+
+.img-edit{
+    width: 30px;
+    height: 20px;
+}
+
+.form-dados{
+    display: inline; 
+    width: auto !important;
+}

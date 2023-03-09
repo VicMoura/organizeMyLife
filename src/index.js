@@ -24,6 +24,7 @@ app.use(session({
     }
 }));
 
+
 //Database
 connection.authenticate()
 .then(()=>
