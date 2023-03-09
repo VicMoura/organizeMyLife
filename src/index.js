@@ -2,6 +2,7 @@ const express = require("express");
 const app = express(); 
 const bodyParser = require("body-parser");
 const connection = require("../data/database"); 
+const session = require("express-session"); 
 
 //View Engine 
 app.set('view engine', 'ejs'); 
@@ -14,6 +15,14 @@ app.use(express.static('views/img'));
 //Body parser
 app.use(bodyParser.urlencoded({extended: false})); 
 app.use(bodyParser.json()); 
+
+//Session 
+app.use(session({
+    secret: "usuarioLogado",
+    cookie : { 
+        maxAge : 300000000
+    }
+}));
 
 //Database
 connection.authenticate()

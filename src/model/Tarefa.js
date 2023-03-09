@@ -17,6 +17,5 @@ const Tarefa = connection.define('tarefa', {
 User.hasMany(Tarefa);  
 Tarefa.belongsTo(User); 
 
-Tarefa.sync({force : false});
 
 module.exports = Tarefa;
