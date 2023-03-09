@@ -57,3 +57,24 @@
     display: inline; 
     width: auto !important;
 }
+
+.card-tarefa {
+    min-width: 250px;
+    width: auto;
+    height: 150px;
+    background-color: #eee;
+}
+
+.situacao{
+    width: 100px;
+    height: 30px;
+}
+
+a.link {
+    display: block;
+    text-decoration: none;
+    color: gray !important;
+}
+
+
+

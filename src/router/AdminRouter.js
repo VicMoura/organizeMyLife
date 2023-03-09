@@ -2,9 +2,14 @@ const express = require("express");
 const router  = express.Router(); 
 const adminAuth = require("../middleware/adminAuth");
 const User = require("../model/User");
+const Tarefa = require("../model/Tarefa");
 
 router.get('/tarefas', adminAuth,  (req, res) => {
-    res.render('templates/admin/tarefas');
+    Tarefa.findAll().then(
+        tarefas => {
+            res.render('templates/admin/tarefas', {tarefas : tarefas});
+        }
+    )
 }); 
 
 router.get('/user', adminAuth, (req, res) => {
@@ -32,5 +37,24 @@ router.post('/apagarConta', adminAuth, (req, res) => {
     }
 });
 
+
+
+router.post('/criarLista', adminAuth, (req, res) => {
+
+    let nome = req.body.nome; 
+    let situacao = req.body.situacao; 
+    let id = req.session.user.id; 
+
+    Tarefa.create({
+        nome : nome, 
+        situacao : situacao,
+        userId : id
+    }).then(() => {
+        res.redirect("/tarefas"); 
+    }).catch((erro) => {
+        console.log(erro);
+        res.redirect("/tarefas"); 
+    })
+});
 
 module.exports = router; 
