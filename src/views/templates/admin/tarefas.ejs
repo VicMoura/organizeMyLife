@@ -31,33 +31,36 @@
 
                             <div class="d-flex flex-wrap"> 
                                     <% tarefas.forEach( tarefa => {  %>
-                                        <a class="link" href="/teste">
-                                            <div class="card-tarefa mt-2 mb-5 text-center mx-5 shadow-lg rounded " onclick="teste()">
-                                                <div class="pt-3">
-                                                    <h4><%= tarefa.nome %></h4>
+                                        <form method="POST" action="/viewTarefa" id="my_form">
+                                            <a class="link" data-toggle="modal" href="javascript:{}" onclick="document.getElementById('my_form').submit();"> 
+                                                <input type="hidden" value="<%= tarefa.id %>" name="tarefaId">
+                                                <div class="card-tarefa mt-2 mb-5 text-center mx-5 shadow-lg rounded ">
+                                                    <div class="pt-3">
+                                                        <h4><%= tarefa.nome %></h4>
+                                                    </div>
+        
+                                                    <div class="mt-5">
+                                                        <% if(tarefa.situacao == 1) { %>
+                                                            <div class="situacao mx-auto shadow-lg rounded" style="background-color: aqua; color: white;">
+                                                                <h4>Fazer</h4>
+                                                            </div>
+                                                        <% } %>
+        
+                                                        <% if(tarefa.situacao == 2) { %>
+                                                            <div class="situacao mx-auto shadow-lg rounded" style="background-color: greenyellow; color: white;">
+                                                                <h4>Fazendo</h4>
+                                                            </div>
+                                                        <% } %>
+        
+                                                        <% if(tarefa.situacao == 3) { %>
+                                                            <div class="situacao mx-auto shadow-lg rounded" style="background-color: yellow; color: white;">
+                                                                <h4>Feito</h4>
+                                                            </div>
+                                                        <% } %>
+                                                    </div>
                                                 </div>
-    
-                                                <div class="mt-5">
-                                                    <% if(tarefa.situacao == 1) { %>
-                                                        <div class="situacao mx-auto shadow-lg rounded" style="background-color: aqua; color: white;">
-                                                            <h4>Fazer</h4>
-                                                        </div>
-                                                    <% } %>
-    
-                                                    <% if(tarefa.situacao == 2) { %>
-                                                        <div class="situacao mx-auto shadow-lg rounded" style="background-color: greenyellow; color: white;">
-                                                            <h4>Fazendo</h4>
-                                                        </div>
-                                                    <% } %>
-    
-                                                    <% if(tarefa.situacao == 3) { %>
-                                                        <div class="situacao mx-auto shadow-lg rounded" style="background-color: yellow; color: white;">
-                                                            <h4>Feito</h4>
-                                                        </div>
-                                                    <% } %>
-                                                </div>
-                                            </div>
-                                        </a>
+                                            </a>
+                                        </form>
 
                                     <% }); %>
                             </div>
@@ -105,6 +108,8 @@
                             </div>
                         </div>
                                 
+
+                          
                 
                 
             </div>

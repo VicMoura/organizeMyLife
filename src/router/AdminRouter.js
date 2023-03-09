@@ -5,7 +5,12 @@ const User = require("../model/User");
 const Tarefa = require("../model/Tarefa");
 
 router.get('/tarefas', adminAuth,  (req, res) => {
-    Tarefa.findAll().then(
+    let id = req.session.user.id; 
+    Tarefa.findAll({
+        where : {
+            userId : id
+        }
+    }).then(
         tarefas => {
             res.render('templates/admin/tarefas', {tarefas : tarefas});
         }
@@ -44,6 +49,7 @@ router.post('/criarLista', adminAuth, (req, res) => {
     let nome = req.body.nome; 
     let situacao = req.body.situacao; 
     let id = req.session.user.id; 
+    console.log(id);
 
     Tarefa.create({
         nome : nome, 
@@ -56,5 +62,24 @@ router.post('/criarLista', adminAuth, (req, res) => {
         res.redirect("/tarefas"); 
     })
 });
+
+router.post('/viewTarefa', adminAuth, (req, res) => {
+    let id = req.body.tarefaId; 
+
+
+     Tarefa.findOne({
+        where : {
+            id : id
+        }
+    }).then(
+        tarefas => {
+            res.render('templates/admin/viewTarefa', {tarefas : tarefas});
+        }
+    )
+
+  
+});
+
+
 
 module.exports = router; 

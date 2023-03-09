@@ -62,6 +62,7 @@ router.post('/autenticacao', (req, res) => {
         if(user != undefined){
 
             let correct = bcrypt.compareSync(senha, user.senha); 
+            req.session.user = undefined; 
 
             if(correct){
                 req.session.user = {
