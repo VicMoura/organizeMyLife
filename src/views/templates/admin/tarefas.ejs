@@ -32,7 +32,7 @@
                             <div class="d-flex flex-wrap"> 
                                     <% tarefas.forEach( tarefa => {  %>
                                         <form method="POST" action="/viewTarefa" id="my_form">
-                                            <a class="link" data-toggle="modal" href="javascript:{}" onclick="document.getElementById('my_form').submit();"> 
+                                            <a class="link" href="javascript:{}" onclick="document.getElementById('my_form').submit();">
                                                 <input type="hidden" value="<%= tarefa.id %>" name="tarefaId">
                                                 <div class="card-tarefa mt-2 mb-5 text-center mx-5 shadow-lg rounded ">
                                                     <div class="pt-3">
