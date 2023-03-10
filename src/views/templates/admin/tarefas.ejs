@@ -2,27 +2,33 @@
 
 <section class="vh-100 gradient-form" style="background-color: #eee;"> 
     <div class="container py-5 h-100 d-flex flex-row">
-                <div class="gradient-custom shadow-lg  mb-1 rounded row  menuLateral">
+                <div class="gradient-custom-2 shadow-lg  mb-1 rounded row  menuLateral">
                         <div class="d-flex flex-column justify-content-start p-0">
-                            <a href="/user">
-                                <img src="user.png" class="img-menu mt-5">
-                            </a>
-
-                            <a>
-                                <img src="logo.png" class="img-menu mt-4" style="width: 80px;">
-                            </a>
-
-                            
-                             <a class="mt-auto mb-5 mr-5" href="/logout">
-                                    <img src="logout.png" style="width: 50px; margin-left: 10px; height: 40px;">
-                            </a>
+                            <div class="pt-3 ml-2 mt-5">
+                                <a href="/user">
+                                    <i class="bi bi-person-circle mx-3"></i>
+                                </a>
+                               </div>
+    
+                               <div class="pt-3 ml-2 mt-5">
+                                <a href="/tarefas">
+                                    <i class="bi bi-card-checklist mx-3"></i>
+                                </a>
+                               </div>
+    
+                                
+                               <div class="pt-3 ml-2 mt-auto mb-5">
+                                <a href="/user">
+                                    <i class="bi bi-box-arrow-right mx-3"></i>
+                                </a>
+                               </div>
                        
 
                         </div>
                 </div>
 
     
-            <div class="w-100 bg-white shadow-lg mb-1 rounded d-flex justify-content-start overflow-auto">
+            <div class="w-100 bg-white shadow-lg mb-1 rounded row d-flex justify-content-start overflow-auto">
                 
                     <div class="m-5">
                             <a class="d-flex justify-content-start mb-5" type="button" data-toggle="modal" data-target="#modalCriarLista">
@@ -31,36 +37,37 @@
 
                             <div class="d-flex flex-wrap"> 
                                     <% tarefas.forEach( tarefa => {  %>
-                                        <form method="POST" action="/viewTarefa" id="my_form">
-                                            <a class="link" href="javascript:{}" onclick="document.getElementById('my_form').submit();">
-                                                <input type="hidden" value="<%= tarefa.id %>" name="tarefaId">
-                                                <div class="card-tarefa mt-2 mb-5 text-center mx-5 shadow-lg rounded ">
+                                       
+                                            
+                                            <a class="link" href="/viewTarefa/<%=tarefa.id%>">
+                                            
+                                                <div class="card-tarefa mt-2 mb-5 text-center mx-5 shadow-lg rounded gradient-custom-2 ">
                                                     <div class="pt-3">
-                                                        <h4><%= tarefa.nome %></h4>
+                                                        <h4 style="color : white"><%= tarefa.nome.toUpperCase() %></h4>
                                                     </div>
         
                                                     <div class="mt-5">
                                                         <% if(tarefa.situacao == 1) { %>
-                                                            <div class="situacao mx-auto shadow-lg rounded" style="background-color: aqua; color: white;">
+                                                            <div class="situacao mx-auto shadow-lg rounded" style="background-color: gray; color: white;">
                                                                 <h4>Fazer</h4>
                                                             </div>
                                                         <% } %>
         
                                                         <% if(tarefa.situacao == 2) { %>
-                                                            <div class="situacao mx-auto shadow-lg rounded" style="background-color: greenyellow; color: white;">
+                                                            <div class="situacao mx-auto shadow-lg rounded" style="background-color: gray; color: white;">
                                                                 <h4>Fazendo</h4>
                                                             </div>
                                                         <% } %>
         
                                                         <% if(tarefa.situacao == 3) { %>
-                                                            <div class="situacao mx-auto shadow-lg rounded" style="background-color: yellow; color: white;">
+                                                            <div class="situacao mx-auto shadow-lg rounded " style="background-color: gray; color: white;">
                                                                 <h4>Feito</h4>
                                                             </div>
                                                         <% } %>
                                                     </div>
                                                 </div>
                                             </a>
-                                        </form>
+                                 
 
                                     <% }); %>
                             </div>
@@ -83,7 +90,7 @@
                                     <div class="modal-body">
                                         <div class="form-outline text-center ">
                                             <label >Insira o nome da lista</label>
-                                            <input type="text" class="form-control " placeholder="Digite o nome da lista" name="nome">
+                                            <input type="text" class="form-control " placeholder="Digite o nome da lista" name="nome" id="nomeDaLista" required>
                                         </div>
                             
                                         <div class="form-outline text-center mt-3">
@@ -98,7 +105,7 @@
                                     </div>
                             
                                     <div class="modal-footer">
-                                        <button type="button" class="btn gradient-custom" onclick="submeterForm(form)">Save changes</button>
+                                        <button type="button" class="btn gradient-custom" onClick="submeterForm(form)">Save changes</button>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     </div>
                                 </form>
@@ -121,7 +128,15 @@
 
 <script>
     function submeterForm(form) {
-        form.submit();
+        let input = document.querySelector('#nomeDaLista');
+        console.log('input', + input.value);
+        if(input.value == undefined){
+            confirm('A LISTA PRECISA DE UM NOME!');
+        }else{
+            form.submit();
+            console.log('OII');
+        }
+        
     }  
 
 </script>

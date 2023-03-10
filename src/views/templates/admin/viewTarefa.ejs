@@ -2,23 +2,31 @@
 <%- include ('../../partials/header.ejs') %> 
 <%- include ('../../partials/telaAdmin.ejs') %> 
         <div class="w-100 bg-white shadow-lg mb-1 rounded row align-items-center">
-            <div class="d-flex flex-row justify-content-center  align-items-center h-100">
-                <div class="user-dados  gradient-custom shadow-lg  mb-1 rounded text-center overflow-auto">
-                    <form method="POST" action="/deleteItem" id="formDelete">
+
+         
+            <div class="d-flex flex-column justify-content-center  align-items-center  h-80 w-100">
+                <div class="user-dados justify-content-start gradient-custom shadow-lg  rounded text-center overflow-auto mb-2">
                                 <div class="d-flex flex-column">
                                     
                                     <div class="mt-3">
-                                        <h1 class=""> <%= tarefa.nome %> </h1> 
+                                        <h1 style="color: white"> <%= tarefa.nome.toUpperCase() %> </h1> 
                                     </div>
-                                    <div class="menu-button-item mx-auto gradient-custom-2  shadow-lg  mb-3 mt-3 rounded ">
-                                        <a type="button" data-toggle="modal" data-target="#modalCriarItem">
+                                    <div class="">
+                                        <a type="button" data-toggle="modal" data-target="#modalCriarItem" class="p-2">
                                             <i class="bi bi-file-earmark-plus-fill"></i>
                                         </a>
 
-                                        <a href="javascript:{}" onclick="document.getElementById('formDelete').submit();">
-                                            <i class="bi bi-file-earmark-x-fill"></i>
+                                        <% if(item.length != 0){ %>
+                                            <a href="javascript:{}" data-toggle="modal" data-target="#modalDeleteItem" class="p-2">
+                                                <i class="bi bi-file-earmark-x-fill"></i>
+                                                <input type="hidden" name="idTarefa" value="<%=tarefa.id %>">
+                                            </a>
+                                        <% }%>
+                                                
+                                        <a href="javascript:{}" data-toggle="modal" data-target="#modalAlterarItem" class="p-2">
+                                            <i class="bi bi-file-earmark-check-fill"></i>
+                                            <input type="hidden" name="idTarefa" value="<%=tarefa.id %>">
                                         </a>
-                                                        
                                         
                                     </div>
 
@@ -26,29 +34,38 @@
                             
                                   
                                 </div>
-                            
-                                <div class="px-5 mx-5">
-                                    <% item.forEach(item => { %>
-                                                <% if(item.tarefaId == tarefa.id)  { %>
-                                                    <div class="form-check d-flex justify-content-start ml-5">
-                                                        <input class="form-check-input" type="checkbox" value="<%= item.id %>" name="checkbox" id="flexCheckDefault">
-                                                        <label class="form-check-label px-2" for="flexCheckDefault">
-                                                        <input type="hidden" name="idTarefa" value="<%= item.tarefaId %>">
-                                                        <%= item.nome %>
-                                                        </label>
-                                                    </div>
-                                                <% } %>
-                                        
-                                    <% }) %>
+                               <form method="POST" action="/alterarSituacao">
+                                <input type="hidden" name="tarefaId" value="<%=tarefa.id %>">
+                                    <div class="px-5 mx-5">
+                                        <% item.forEach(item => { %>
+                                                    <% if(item.tarefaId == tarefa.id)  { %>
+                                                        <div class="form-check d-flex justify-content-start ml-5 mt-3 text-center">
+                                                            <% if(item.check) { %>
+                                                                <i class="bi bi-check" style="color: green;"></i>
+                                                                <label class="form-check-label px-2 mt-2" for="flexCheckDefault" style="color: white;"></label>
+                                                            <%} else { %> 
+                                                                <i class="bi bi-square"></i>
+                                                                <label class="form-check-label px-2 mt-2" for="flexCheckDefault" style="color: white;">
+                                                            <%}  %> 
+                                                            <%= item.nome %>
+                                                            </label>
+                                                        </div>
+                                                    <% } %>
+                                            
+                                        <% }) %>
+                                </form>
                             </div>
                         </form>
-                           <form method="POST" action="/apagarConta" onsubmit="confirmarDeletarConta(event, this)">
                             <div class="d-block mt-5">
-                                
-                                <button  class="btn btn-danger m-4">APAGAR LISTA</button>
-                                <button  class="btn gradient-custom-2" style="color:white">SALVAR ALTERAÇÕES</button>
+                                <form method="POST" action="/deleteLista" onsubmit="confirmarDeletarConta(event, this)">
+                                    <input type="hidden" class="form-control " value="<%= tarefa.id %>" name="tarefaId">
+                                    <button  class="btn btn-danger m-4"  onclick="submeterForm(this.form)">APAGAR LISTA</button>
+                                    <a type="button" href="/tarefas" class="btn" style="background-color: gray; color: white;">SALVAR ALTERAÇÕES</a>
+                                </form>
+
+                               
                             </div>
-                           </form>
+                         
     
     
                 
@@ -60,7 +77,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalTitle">Criar Lista</h5>
+                        <h5 class="modal-title" id="modalTitle">Criar item</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -88,6 +105,82 @@
                 </div>
                 </div>
             </div>
+
+            <!-- Modal Delete ITEM-->
+            <div class="modal fade" id="modalDeleteItem" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalTitle">Deletar item</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <form method="POST" action="/deleteItem">
+                            <div class="modal-body">
+                                <div class="form-outline text-center">
+                                    <label >Selecione o item </label>
+                                    <input type="hidden" class="form-control " value="<%= tarefa.id %>" name="tarefaId">
+                                        <select class="form-select" name="idItem">
+                                            <% item.forEach(item => { if(item.tarefaId == tarefa.id) {%>
+                                                <option value="<%=item.id%>" name="idItem"><%=item.nome %></option>
+                                            <% } }) %>
+                                        </select>
+                                </div>
+                        
+                    
+                            </div>
+                    
+                            <div class="modal-footer">
+                                <button type="button" class="btn gradient-custom" onclick="submeterForm(this.form)">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+             </div>
+      
+            <!-- Modal Alterar ITEM-->
+            <div class="modal fade" id="modalAlterarItem" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitle">Alterar Situação</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <form method="POST" action="/alterarSituacao">
+                        <div class="modal-body">
+                            <div class="form-outline text-center">
+                                <label >Selecione o item </label>
+                                <input type="hidden" class="form-control " value="<%= tarefa.id %>" name="tarefaId">
+                                    <select class="form-select" name="idItem">
+                                        <% item.forEach(item => { if(item.tarefaId == tarefa.id) {%>
+                                            <% if(item.check == true) {%>
+                                                <option value="<%=item.id%>"name="idItem" style="background: green;"> <%=item.nome%> [V]</option>
+                                            <%}else { %>
+                                                <option value="<%=item.id%>" name="idItem" style="background: aqua;"><%=item.nome%> [] </option>
+                                            <%} %>
+                                        <% } }) %>
+                                    </select>
+                            </div>
+                     
+                
+                        </div>
+                
+                        <div class="modal-footer">
+                            <button type="button" class="btn gradient-custom" onclick="submeterForm(this.form)">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+            
+                  
+                </div>
+                </div>
+            </div>
                     
         </div>
 
@@ -95,9 +188,17 @@
 </section>
 
 <script>
+
+    function atualizaSelect(){
+        const myInput = document.querySelector("#teste"); myInput.value= item.id;
+	    console.log(value); 
+    }
+
     function submeterForm(form) {
+
         form.submit();
     }  
+
 
 </script>
 

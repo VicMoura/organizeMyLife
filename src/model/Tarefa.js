@@ -18,4 +18,5 @@ User.hasMany(Tarefa);
 Tarefa.belongsTo(User); 
 
 
+
 module.exports = Tarefa;

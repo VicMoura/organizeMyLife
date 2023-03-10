@@ -16,7 +16,9 @@ router.get('/tarefas', adminAuth,  (req, res) => {
         }
     }).then(
         tarefas => {
+           
             res.render('templates/admin/tarefas', {tarefas : tarefas});
+           
         }
     )
 }); 
@@ -25,46 +27,56 @@ router.get('/user', adminAuth, (req, res) => {
     res.render('templates/admin/user', {user : req.session.user});
 });
 
-router.get('/viewTarefas', adminAuth, (req, res) => {
-    let id = req.session.user.id;
-    let idTarefa = req.params.idTarefa;
-    console.log('vendo o ID', idTarefa);
-    Tarefa.findAll({
-        where : {
-            userId : id,
-            id : idTarefa
-        }
-    }).then(
-        tarefas => {
-            Item.findAll({
-                where : {
-                    tarefaId : idTarefa
-                }
-            }).then((item) => {
-                res.render('templates/admin/viewTarefa', {tarefa : tarefas, item : item});
-            }).catch((erro) => {
-                console.log(erro); 
-                res.redirect('/tarefas');
-            });
-        });
-
-});
 
 router.post('/apagarConta', adminAuth, (req, res) => {
     let id = req.body.id; 
+
     if(id != undefined){
         if(!isNaN(id)){
-            User.destroy({
-                where : {
-                    id : id
+            Tarefa.findOne({
+                where: {
+                    userId : id
                 }
-            }).then(() => {
-                res.redirect("/"); 
-            }).catch((erro) => {
-                console.log(erro); 
-                res.redirect("/user"); 
-            }); 
-
+                }).then(tarefa => {
+                
+                        Item.destroy({
+                            where : {
+                                tarefaId : tarefa.id
+                            }
+                        }).then(() => {
+                            Tarefa.destroy({
+                                where : {
+                                    id : tarefa.id
+                                }
+                            }).then(() => {
+        
+                                User.destroy({
+                                    where : {
+                                        id : id
+                                    }
+                                }).then(() => {
+        
+                                    res.redirect("/"); 
+        
+                                }).catch((erro) => {
+                                    console.log(erro); 
+                                    res.redirect("/user"); 
+                                }); 
+                            }).catch((erro) => {
+                                console.log(erro); 
+                                res.redirect('/');
+                            })
+                
+                        }).catch((erro) => {
+                            console.log(erro); 
+                            res.redirect('/');
+                        })
+        
+                }).catch((erro) => {
+                    console.log(erro); 
+                    res.redirect('/');
+                })
+            
         }else{
             res.redirect("/user"); 
         }
@@ -92,11 +104,10 @@ router.post('/criarLista', adminAuth, (req, res) => {
     })
 });
 
-router.post('/viewTarefa', adminAuth, (req, res) => {
-    let id = req.body.tarefaId; 
-    req.session.tarefa = {
-        id : id
-    }
+router.get('/viewTarefa/:tarefaId', adminAuth, (req, res) => {
+    let id = req.params.tarefaId; 
+    console.log("ESSE É O ID VIEWTAREFA " + id);
+
      Tarefa.findOne({
         where : {
             id : id
@@ -158,10 +169,10 @@ router.post('/criarItem', adminAuth, (req, res) => {
 
 router.post('/deleteItem', adminAuth, (req, res) => {
 
-    let item = req.body.checkbox;
-    let id = req.body.idTarefa; 
+    let item = req.body.idItem;
+    let id = req.body.tarefaId; 
     console.log('SOCORROOO', id);
-
+    console.log('SOCORROOO', item);
 
     Tarefa.findOne({
         where : {
@@ -187,9 +198,88 @@ router.post('/deleteItem', adminAuth, (req, res) => {
         res.redirect('/tarefas');
     })
 
-    
-    
 
 });
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+router.post('/alterarSituacao', adminAuth, (req, res) => {
+
+    let idItem = req.body.idItem;
+    let id = req.body.tarefaId; 
+    let trueOrFalse; 
+
+    Item.findOne({
+        where : {
+            id : idItem
+        }
+    }).then(item => {
+        trueOrFalse = !item.check; 
+    }).catch((erro) => {
+        console.log(erro);
+    })
+
+
+    Tarefa.findOne({
+        where : {
+            id : id
+        }
+    }).then(
+        tarefas => {
+            Item.update({
+                check : trueOrFalse
+                },
+                {
+                where : {
+                    id : idItem
+                    }
+                 }).then(function () {
+                        Item.findAll({}).then((itens) => {
+                                res.render('templates/admin/viewTarefa', {tarefa : tarefas, item : itens});
+                        }).catch((erro) => {
+                            console.log(erro); 
+                            res.redirect('/tarefas');
+                        })
+                }).catch((erro) => {
+                        console.log(erro); 
+                        res.redirect('/tarefas');
+                });
+    }).catch((erro) => {
+        console.log(erro); 
+        res.redirect('/tarefas');
+    })
+
+});
+
+router.post('/deleteLista', adminAuth, (req, res) => {
+
+    let id = req.body.tarefaId; 
+    
+    Item.destroy({
+        where : {
+            tarefaId : id
+        }
+    }).then(() => {
+        Tarefa.destroy({
+            where : {
+                id : id
+            }
+        }).then(() => {
+            res.redirect('/tarefas');
+
+        }).catch((erro) => {
+            console.log(erro); 
+            res.redirect('/tarefas');
+        })
+
+    }).catch((erro) => {
+        console.log(erro); 
+        res.redirect('/tarefas');
+    })
+
+});
+
 
 module.exports = router; 
