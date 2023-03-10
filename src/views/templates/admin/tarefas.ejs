@@ -28,14 +28,20 @@
                 </div>
 
     
-            <div class="w-100 bg-white shadow-lg mb-1 rounded row d-flex justify-content-start overflow-auto">
+            <div class="w-100 bg-white shadow-lg mb-1 rounded d-flex justify-content-start overflow-auto">
                 
                     <div class="m-5">
-                            <a class="d-flex justify-content-start mb-5" type="button" data-toggle="modal" data-target="#modalCriarLista">
-                                <img src="add.png" style="width: 50px; margin-left: 10px; height: 40px;">
-                            </a>
+                            <div class="gradient-custom shadow-lg mb-1 rounded d-flex justify-content-center  w-50 mx-auto">
+                                <a class="p-2" type="button" data-toggle="modal" data-target="#modalCriarLista">
+                                    <i class="bi bi-plus-square-fill"></i>
+                                </a>
 
-                            <div class="d-flex flex-wrap"> 
+                                <a class="p-2" type="button" data-toggle="modal" data-target="#modalEditarLista">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                            </div>
+
+                            <div class="d-flex flex-wrap mt-5"> 
                                     <% tarefas.forEach( tarefa => {  %>
                                        
                                             
@@ -48,19 +54,19 @@
         
                                                     <div class="mt-5">
                                                         <% if(tarefa.situacao == 1) { %>
-                                                            <div class="situacao mx-auto shadow-lg rounded" style="background-color: gray; color: white;">
+                                                            <div class="situacao mx-auto shadow-lg rounded" style="background-color: aqua; color: white;">
                                                                 <h4>Fazer</h4>
                                                             </div>
                                                         <% } %>
         
                                                         <% if(tarefa.situacao == 2) { %>
-                                                            <div class="situacao mx-auto shadow-lg rounded" style="background-color: gray; color: white;">
+                                                            <div class="situacao mx-auto shadow-lg rounded" style="background-color: greenyellow; color: white;">
                                                                 <h4>Fazendo</h4>
                                                             </div>
                                                         <% } %>
         
                                                         <% if(tarefa.situacao == 3) { %>
-                                                            <div class="situacao mx-auto shadow-lg rounded " style="background-color: gray; color: white;">
+                                                            <div class="situacao mx-auto shadow-lg rounded " style="background-color: rgb(153, 0, 107); color: white;">
                                                                 <h4>Feito</h4>
                                                             </div>
                                                         <% } %>
@@ -116,6 +122,58 @@
                         </div>
                                 
 
+                        <!-- Modal EDITAR LISTA-->
+                        <div class="modal fade" id="modalEditarLista" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalTitle">Editar Lista</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <form method="POST" action="/editarLista">
+                                    <div class="modal-body">
+                  
+                                        <div class="form-outline text-center mt-3">
+                                            <label >Qual a lista que você deseja alterar? </label>
+                                            <select class="form-select" aria-label="Default select example" name="tarefaId">
+    
+                                                <% tarefas.forEach( tarefa => {  %>
+                                                    <option value="<%=tarefa.id%>" select><%=tarefa.nome%></option>
+                                                <% }); %>
+                                              </select>
+                                        </div>
+
+                                            <div class="form-outline text-center" for="subscribeNews">
+                                                <label >Insira o nome da lista</label>
+                                                <input type="text" class="form-control " placeholder="Digite o nome da lista" name="nome" id="nomeDaLista" value="">
+                                            </div>
+                
+                                    
+                            
+                                        <div class="form-outline text-center mt-3">
+                                            <label >Qual a situação da lista? </label>
+                                            <select class="form-select" aria-label="Default select example" name="situacao">
+                                                <option selected value="undefined">Selecione a situação da tarefa</option>
+                                                <option value="1" style="background-color: aqua;">Fazer</option>
+                                                <option value="2" style="background-color: greenyellow;">Fazendo</option>
+                                                <option value="3" style="background-color: yellow;">Feita</option>
+                                              </select>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn gradient-custom" onClick="submeterForm(form)">Save changes</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
+                        
+                              
+                            </div>
+                            </div>
+                        </div>
                           
                 
                 

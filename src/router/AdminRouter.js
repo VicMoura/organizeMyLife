@@ -4,7 +4,7 @@ const adminAuth = require("../middleware/adminAuth");
 const User = require("../model/User");
 const Tarefa = require("../model/Tarefa");
 const Item = require("../model/Item");
-
+const readline = require("readline");
 let itens; 
 
 
@@ -280,6 +280,68 @@ router.post('/deleteLista', adminAuth, (req, res) => {
     })
 
 });
+
+router.post('/editarLista', adminAuth, (req, res) => {
+
+    let nome = req.body.nome; 
+    let situacao = req.body.situacao; 
+    let id = req.session.user.id; 
+    let tarefaId = req.body.tarefaId;
+
+
+
+    if(nome && situacao == 'undefined'){
+        Tarefa.update({
+            nome : nome 
+        }, {
+            where : {
+                userId : id,
+                id : tarefaId
+            }
+        }).then(() => { 
+            res.redirect("/tarefas"); 
+        }).catch((erro) => {
+            console.log(erro);
+            res.redirect("/tarefas"); 
+        })
+    }
+
+    if(situacao != 'undefined' && !nome){
+        Tarefa.update({
+            situacao : situacao 
+        }, {
+            where : {
+                userId : id,
+                id : tarefaId
+            }
+        }).then(() => { 
+            res.redirect("/tarefas"); 
+        }).catch((erro) => {
+            console.log(erro);
+            res.redirect("/tarefas"); 
+        })
+    }
+
+    if(nome && situacao != 'undefined'){
+        Tarefa.update({
+            nome : nome,
+            situacao : situacao
+        }, {
+            where : {
+                userId : id,
+                id : tarefaId
+            }
+        }).then(() => { 
+            res.redirect("/tarefas"); 
+        }).catch((erro) => {
+            console.log(erro);
+            res.redirect("/tarefas"); 
+        })
+    }
+    res.redirect("/tarefas"); 
+
+});
+
 
 
 module.exports = router; 
