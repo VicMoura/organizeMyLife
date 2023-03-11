@@ -4,9 +4,6 @@ const adminAuth = require("../middleware/adminAuth");
 const User = require("../model/User");
 const Tarefa = require("../model/Tarefa");
 const Item = require("../model/Item");
-const readline = require("readline");
-let itens; 
-
 
 router.get('/tarefas', adminAuth,  (req, res) => {
     let id = req.session.user.id; 
@@ -87,21 +84,26 @@ router.post('/apagarConta', adminAuth, (req, res) => {
 
 router.post('/criarLista', adminAuth, (req, res) => {
 
-    let nome = req.body.nome; 
-    let situacao = req.body.situacao; 
+    let nome = req.body.nomeCriarLista; 
+    let situacao = req.body.situacaoCriarLista; 
     let id = req.session.user.id; 
-    console.log(id);
+    console.log(nome + 'NOME DA LISTA\n'); 
+    console.log(situacao + 'SITUACAO DA LISTA\n'); 
+    console.log(id + 'SITUACAO DA LISTA\n'); 
 
-    Tarefa.create({
-        nome : nome, 
-        situacao : situacao,
-        userId : id
-    }).then((tarefa) => { 
-        res.redirect("/tarefas"); 
-    }).catch((erro) => {
-        console.log(erro);
-        res.redirect("/tarefas"); 
-    })
+    if(nome && (situacao != 'undefined')){
+        Tarefa.create({
+            nome : nome, 
+            situacao : situacao,
+            userId : id
+        }).then((tarefa) => { 
+            res.redirect("/tarefas"); 
+        }).catch((erro) => {
+            console.log(erro);
+            res.redirect("/tarefas"); 
+        })
+    }
+
 });
 
 router.get('/viewTarefa/:tarefaId', adminAuth, (req, res) => {
@@ -136,32 +138,35 @@ router.post('/criarItem', adminAuth, (req, res) => {
     let nome = req.body.nome; 
     let check = req.body.check; 
     let id = req.body.tarefaId
-    Tarefa.findOne({
-        where : {
-            id : id
-        }
-    }).then(
-        tarefas => {
-            Item.create({
-                nome : nome, 
-                check : check,
-                tarefaId : id
-            }).then(() => {
-                    Item.findAll({
-                    }).then((item) => {
-                        res.render('templates/admin/viewTarefa', {tarefa : tarefas, item : item});
-                    }).catch((erro) => {
-                        console.log(erro); 
-                        res.redirect('/tarefas');
-                    })
-            }).catch((erro) => {
-                console.log(erro);
-                res.redirect('/tarefas'); 
-            })
-    }).catch((erro) => {
-        console.log(erro); 
-        res.redirect('/tarefas');
-    })
+    
+    if(nome){
+        Tarefa.findOne({
+            where : {
+                id : id
+            }
+        }).then(
+            tarefas => {
+                Item.create({
+                    nome : nome, 
+                    check : check,
+                    tarefaId : id
+                }).then(() => {
+                        Item.findAll({
+                        }).then((item) => {
+                            res.render('templates/admin/viewTarefa', {tarefa : tarefas, item : item});
+                        }).catch((erro) => {
+                            console.log(erro); 
+                            res.redirect('/tarefas');
+                        })
+                }).catch((erro) => {
+                    console.log(erro);
+                    res.redirect('/tarefas'); 
+                })
+        }).catch((erro) => {
+            console.log(erro); 
+            res.redirect('/tarefas');
+        })
+    }
 
           
 
@@ -338,10 +343,33 @@ router.post('/editarLista', adminAuth, (req, res) => {
             res.redirect("/tarefas"); 
         })
     }
-    res.redirect("/tarefas"); 
 
 });
 
+router.post('/filtrarLista', adminAuth, (req, res) => {
+
+    let situacao = req.body.situacao; 
+    let id = req.session.user.id; 
+    
+    console.log(id + 'ID');
+    console.log(situacao + 'SITUACAO'); 
+ 
+
+    if(situacao != 'undefined'){
+        parseInt(situacao);
+        Tarefa.findAll({
+            where : {
+                userId : id,
+                situacao : situacao
+            }
+        }).then((tarefa) => { 
+            res.render("templates/admin/tarefas", {tarefas : tarefa}); 
+        }).catch((erro) => {
+            console.log(erro);
+            res.redirect("/tarefas"); 
+        })
+    }
+});
 
 
 module.exports = router; 

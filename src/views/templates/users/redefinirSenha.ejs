@@ -1,0 +1,27 @@
+<%- include ('../../partials/header.ejs') %> 
+<%- include ('../../partials/telaInicial.ejs') %> 
+
+        <div class="w-50 bg-white shadow-lg p-3 mb-1 rounded d-flex flex-column">
+                <div class="pt-5 h-70 ">
+                    <div class="d-flex justify-content-center mt-2">
+                        <h2>Organize My Life</h2>
+                    </div>
+                    <h6 class="text-center">SEU ORGANIZADOR DE TAREFAS FAVORITO</h6>
+                </div>
+
+                <form method="POST" action="/redefinirSenha">
+                    <div class="form-outline text-center mx-5 mt-5 px-5">
+                        <label >Insira sua nova senha</label>
+                        <input type="password" class="form-control mt-3  px-5 senha" name="senha">
+                    </div>
+
+                    <button type="submit" class="btn  mt-3 d-flex mx-auto gradient-custom btn-login justify-content-center align-items-center">Enviar</button>
+
+                </form>
+
+                
+                </div>
+        </div>
+</div>
+</section>
+<%- include ('../../partials/footer.ejs') %> 

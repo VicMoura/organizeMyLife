@@ -1,7 +1,7 @@
 <%- include ('../../partials/header.ejs') %> 
 
 <section class="vh-100 gradient-form" style="background-color: #eee;"> 
-    <div class="container py-5 h-100 d-flex flex-row">
+    <div class="container py-4 h-100 d-flex flex-row">
                 <div class="gradient-custom-2 shadow-lg  mb-1 rounded row  menuLateral">
                         <div class="d-flex flex-column justify-content-start p-0">
                             <div class="pt-3 ml-2 mt-5">
@@ -18,7 +18,7 @@
     
                                 
                                <div class="pt-3 ml-2 mt-auto mb-5">
-                                <a href="/user">
+                                <a href="/logout">
                                     <i class="bi bi-box-arrow-right mx-3"></i>
                                 </a>
                                </div>
@@ -28,28 +28,34 @@
                 </div>
 
     
-            <div class="w-100 bg-white shadow-lg mb-1 rounded d-flex justify-content-start overflow-auto">
+            <div class="w-100 bg-white shadow-lg mb-1 rounded  overflow-auto">
                 
-                    <div class="m-5">
-                            <div class="gradient-custom shadow-lg mb-1 rounded d-flex justify-content-center  w-50 mx-auto">
-                                <a class="p-2" type="button" data-toggle="modal" data-target="#modalCriarLista">
-                                    <i class="bi bi-plus-square-fill"></i>
-                                </a>
+                    <div class="d-flex justify-content-center mt-3">
+                        <div class="gradient-custom shadow-lg mb-1 rounded" style="width: auto;">
+                            <a class="p-2" type="button" data-toggle="modal" data-target="#modalCriarLista">
+                                <i class="bi bi-plus-square-fill"></i>
+                            </a>
+    
+                            <a class="p-2" type="button" data-toggle="modal" data-target="#modalEditarLista">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+    
+                            <a class="p-2" type="button" data-toggle="modal" data-target="#modalFiltrarLista">
+                                <i class="bi bi-filter"></i>
+                            </a>
+                        </div>
+                    </div>
 
-                                <a class="p-2" type="button" data-toggle="modal" data-target="#modalEditarLista">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                            </div>
-
+                    <div >
                             <div class="d-flex flex-wrap mt-5"> 
                                     <% tarefas.forEach( tarefa => {  %>
                                        
                                             
                                             <a class="link" href="/viewTarefa/<%=tarefa.id%>">
                                             
-                                                <div class="card-tarefa mt-2 mb-5 text-center mx-5 shadow-lg rounded gradient-custom-2 ">
-                                                    <div class="pt-3">
-                                                        <h4 style="color : white"><%= tarefa.nome.toUpperCase() %></h4>
+                                                <div class="card-tarefa mt-3 mb-3 text-center mx-3 shadow-lg rounded gradient-custom-2 ">
+                                                    <div class="pt-3 px-4">
+                                                        <h4 class="nome-Tarefa" style="color : white"><%= tarefa.nome.toUpperCase() %></h4>
                                                     </div>
         
                                                     <div class="mt-5">
@@ -96,23 +102,23 @@
                                     <div class="modal-body">
                                         <div class="form-outline text-center ">
                                             <label >Insira o nome da lista</label>
-                                            <input type="text" class="form-control " placeholder="Digite o nome da lista" name="nome" id="nomeDaLista" required>
+                                            <input type="text" class="form-control " placeholder="Digite o nome da lista" name="nomeCriarLista" id="nomeDaLista" required>
                                         </div>
                             
                                         <div class="form-outline text-center mt-3">
                                             <label >Qual a situação da lista? </label>
-                                            <select class="form-select" aria-label="Default select example" name="situacao">
-                                                <option selected>Selecione a situação da tarefa</option>
+                                            <select class="form-select" aria-label="Default select example" name="situacaoCriarLista">
+                                                <option value="undefined" selected>Selecione a situação da tarefa</option>
                                                 <option value="1" style="background-color: aqua;">Fazer</option>
                                                 <option value="2" style="background-color: greenyellow;">Fazendo</option>
-                                                <option value="3" style="background-color: yellow;">Feita</option>
+                                                <option value="3" style="background-color: rgb(153, 0, 107);">Feito</option>
                                               </select>
                                         </div>
                                     </div>
                             
                                     <div class="modal-footer">
-                                        <button type="button" class="btn gradient-custom" onClick="submeterForm(form)">Save changes</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn gradient-custom" onClick="submeterForm(form)">Salvar</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
                                     </div>
                                 </form>
                         
@@ -159,14 +165,50 @@
                                                 <option selected value="undefined">Selecione a situação da tarefa</option>
                                                 <option value="1" style="background-color: aqua;">Fazer</option>
                                                 <option value="2" style="background-color: greenyellow;">Fazendo</option>
-                                                <option value="3" style="background-color: yellow;">Feita</option>
+                                                <option value="3" style="background-color: rgb(153, 0, 107);">Feito</option>
                                               </select>
                                         </div>
                                     </div>
                             
                                     <div class="modal-footer">
-                                        <button type="button" class="btn gradient-custom" onClick="submeterForm(form)">Save changes</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn gradient-custom" onClick="submeterForm(form)">Salvar</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+                                    </div>
+                                </form>
+                        
+                              
+                            </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Modal Filtrar LISTA-->
+                        <div class="modal fade" id="modalFiltrarLista" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalTitle">Filtrar Lista</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            
+                                <form method="POST" action="/filtrarLista">
+                                    <div class="modal-body">
+                                        <div class="form-outline text-center mt-3">
+                                            <label >Qual a situação da lista que deseja filtrar? </label>
+                                            <select class="form-select" aria-label="Default select example" name="situacao">
+                                                <option selected value="undefined">Selecione a situação da tarefa</option>
+                                                <option value="1" style="background-color: aqua;">Fazer</option>
+                                                <option value="2" style="background-color: greenyellow;">Fazendo</option>
+                                                <option value="3" style="background-color: rgb(153, 0, 107);">Feito</option>
+                                              </select>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn gradient-custom" onClick="submeterForm(form)">Salvar</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
                                     </div>
                                 </form>
                         

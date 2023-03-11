@@ -18,6 +18,10 @@ background: linear-gradient(to right, #D7DDE8, #757F9A); /* W3C, IE 10+/ Edge, F
     src: url(fonte.ttf);
  }
 
+ .senha{
+    font-family: serif;
+}
+
  body {
     font-family: fonte;
     color: gray;
@@ -69,7 +73,7 @@ background: linear-gradient(to right, #D7DDE8, #757F9A); /* W3C, IE 10+/ Edge, F
 }
 
 .card-tarefa {
-    min-width: 250px;
+    min-width: 200px;
     width: auto;
     height: 150px;
     background-color: #eee;
@@ -113,4 +117,11 @@ select option {
 
   menu-tarefa {
     width : 100px;
+  }
+
+  h4.nome-Tarefa {
+    max-width: 10ch;
+    overflow: hidden;
+     text-overflow: ellipsis;
+    white-space: nowrap;
   }
