@@ -4,7 +4,8 @@
   "description": "XXXXXX",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,9 @@
     "node-popup": "^0.1.14",
     "nodemailer": "^6.9.1",
     "sequelize": "^6.29.1",
-    "sweetalert2": "^11.7.3"
+    "sweetalert2": "^11.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
   }
 }
