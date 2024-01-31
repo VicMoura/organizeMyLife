@@ -3,14 +3,15 @@ const app = express();
 const bodyParser = require("body-parser");
 const connection = require("../data/database"); 
 const session = require("express-session"); 
+const path = require("path");
 
 //View Engine 
 app.set('view engine', 'ejs'); 
-app.set('views', 'views'); 
+app.set('views', path.join(__dirname, 'views')); 
 
 //Static 
-app.use(express.static('views/public'));
-app.use(express.static('views/img'));
+app.use(express.static(path.join(__dirname, 'views/public')));
+app.use(express.static(path.join(__dirname, 'views/img')));
 
 //Body parser
 app.use(bodyParser.urlencoded({extended: false})); 
@@ -21,7 +22,9 @@ app.use(session({
     secret: "usuarioLogado",
     cookie : { 
         maxAge : 300000000
-    }
+    },
+    resave: true,
+    saveUninitialized: true
 }));
 
 
