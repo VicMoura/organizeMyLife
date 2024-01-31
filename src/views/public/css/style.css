@@ -27,10 +27,32 @@ background: linear-gradient(to right, #D7DDE8, #757F9A); /* W3C, IE 10+/ Edge, F
     color: gray;
  }
 
- .btn-login {
+ .btn {
     width: 10em;
+    color:white;
+ }
+
+ .btn-claro {
+    width: 10em;
+    background: #b8b9bb;
+    color: #6f6d6b
+ }
+ 
+ .btn-claro:hover{
+    background: #6f6d6b;
     color: white;
  }
+
+ .btn-escuro {
+    width: 10em;
+    background: #6f6d6b;
+ }
+ 
+ .btn-escuro:hover{
+    background: #b8b9bb;
+    color: #6f6d6b;
+ }
+
 
 .img-info{
     width: 40px;
