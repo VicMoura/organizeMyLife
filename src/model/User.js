@@ -16,6 +16,14 @@ const User = connection.define('user', {
     }
 });
 
+connection.sync({ force: false })
+    .then(() => {
+        console.log('Tabela de usuários criada com sucesso.');
+    })
+    .catch(err => {
+        console.error('Erro ao criar tabela de usuários:', err);
+    });
+
 
 
 module.exports = User; 
