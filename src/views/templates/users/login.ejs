@@ -1,34 +1,43 @@
 <%- include ('../../partials/header.ejs') %> 
-<%- include ('../../partials/telaInicial.ejs') %> 
 
-    <div class="w-50 bg-white shadow-lg p-3 mb-1 rounded d-flex flex-column">
+<section class="vh-100 gradient-form section-small" style="background-color: #eee;"> 
+    <div class="container py-5 h-100 d-flex flex-row">
+                <div class="w-50 gradient-custom shadow-lg p-3 mb-1 rounded row align-items-center">
+                        <div class="col mx-auto text-center">
+                            <img src="logo.png" class="img-fluid mw-100 h-auto" >
+                        </div>
+                </div>
+
+    <div class="w-50 bg-white shadow-lg pt-5 mb-1 rounded d-flex flex-column align-items-center">
         <div class="pt-5 h-70 ">
             <div class="d-flex justify-content-center mt-2">
-                <h2>Organize My Life</h2>
+                <h2>Login</h2>
             </div>
-            <h6 class="text-center">SEU ORGANIZADOR DE TAREFAS FAVORITO</h6>
+            <h6 class="text-center">Faça o login para continuar</h6>
         </div>
 
-        <form method="POST" action="/autenticacao">
-            <div class="form-outline text-center mx-5 mt-5 px-5">
-                <label >Insira seu email</label>
-                <input type="email" class="form-control mt-3  px-5 " placeholder="example@gmail.com" name="email">
+        <form method="POST" action="/autenticacao" class="form-login">
+            <div class="form-outline text-start mt-5 px-3">
+                <label >Entre com o email:</label>
+                <input type="email" class="form-control" placeholder="example@gmail.com" name="email">
             </div>
 
-            <div class="form-outline text-center mx-5 mt-3 px-5">
-                <label >Insira sua senha</label>
-                <input type="password" class="form-control mt-3 px-5 mb-4 senha" placeholder="**********" name="senha">
+            <div class="form-outline text-start mt-3 px-3">
+                <label >Entre com a senha</label>
+                <input type="password" class="form-control  senha" placeholder="**********" name="senha">
             </div>
-            <a href="/recuperarSenha" class="mt-5">
-                <small class="text-muted m-5 p-5">Esqueceu a senha?</small>
-            </a>
-            <button type="submit" class="btn  mt-3 d-flex mx-auto gradient-custom btn-login justify-content-center align-items-center">Entrar</button>
+            <div>
+                <a href="/recuperarSenha" class="mt-5" style="text-decoration: none;">
+                    <small class="text-muted px-3">Esqueceu a senha?</small>
+                </a>
+            </div>
+            <button type="submit" class="btn d-flex mx-auto btn-escuro justify-content-center align-items-center mb-4 mt-4 w-80">Entrar</button>
 
         </form>
 
-        <div class="mt-5 h-100">
+        <div class="mt-5 h-100 p-4">
             <label class="mx-auto d-block text-center mt-4">Não possui uma conta?</label>
-            <a class="mx-auto d-block mt-2 btn gradient-custom btn-login" href="/cadastro">CADASTRE-SE</a>
+            <a class="mx-auto d-block mt-2 btn btn-claro" href="/cadastro">CADASTRE-SE</a>
         </div>
 
         
