@@ -1,40 +1,46 @@
 <%- include ('../../partials/header.ejs') %> 
-<%- include ('../../partials/telaInicial.ejs') %> 
 
-    <div class="w-50 bg-white shadow-lg p-3 mb-1 rounded d-flex flex-column">
-        <div class="pt-5 h-70 ">
-            <div class="d-flex justify-content-center mt-2">
-                <h2>Organize My Life</h2>
+<section class="vh-100 gradient-form section-small" style="background-color: #eee;"> 
+    <div class="container py-5 h-100 d-flex flex-row">
+        <div class="w-50 gradient-custom shadow-lg p-3 mb-1 rounded row align-items-center">
+            <div class="col mx-auto text-center">
+                <img src="logo.png" class="img-fluid mw-100 h-auto" >
             </div>
-            <h6 class="text-center">SEU ORGANIZADOR DE TAREFAS FAVORITO</h6>
         </div>
 
-        <form method="POST" action="/cadastro/usuario">
+        <div class="w-50 bg-white shadow-lg pt-5 mb-1 rounded d-flex flex-column align-items-center">
+                <div class="pt-5 h-70 ">
+                    <div class="d-flex justify-content-center mt-2">
+                        <h2>Cadastre-se</h2>
+                    </div>
+                    <h6 class="text-center">Faça o cadastro para logar</h6>
+                </div>
 
-            <div class="form-outline text-center mx-5 mt-5 px-5">
-                <label >Insira seu nome</label>
-                <input type="text" class="form-control mt-3  px-5 " placeholder="Digite seu nome" name="nome">
+                <form method="POST" action="/cadastro/usuario" class="form-login">
+
+                    <div class="form-outline text-start mt-5 px-3">
+                        <label >Insira seu nome</label>
+                        <input type="text" class="form-control" placeholder="Digite seu nome" name="nome">
+                    </div>
+
+                    <div class="form-outline text-start mt-2 px-3">
+                        <label >Insira seu email</label>
+                        <input type="email" class="form-control " placeholder="example@gmail.com" name="email">
+                    </div>
+
+                    <div class="form-outline text-start mt-3 px-3">
+                        <label >Insira sua senha</label>
+                        <input type="password" class="form-control mb-4 senha" placeholder="**********" name="senha">
+                    </div>
+                    <button type="submit" class="btn  mt-3 d-flex mx-auto gradient-custom btn-login justify-content-center align-items-center mb-4">Cadastrar</button>
+
+                </form>
+
+            <div class="mt-5 h-100 d-flex justify-content-center align-items-center p-4">
+                <a href="/">
+                    <i class="bi bi-house gradient-custom p-2 rounded"></i>
+                </a>
             </div>
-
-            <div class="form-outline text-center mx-5 mt-2 px-5">
-                <label >Insira seu email</label>
-                <input type="email" class="form-control mt-3  px-5 " placeholder="example@gmail.com" name="email">
-            </div>
-
-            <div class="form-outline text-center mx-5 mt-3 px-5">
-                <label >Insira sua senha</label>
-                <input type="password" class="form-control mt-3  px-5 mb-4 senha" placeholder="**********" name="senha">
-            </div>
-            <button type="submit" class="btn  mt-3 d-flex mx-auto gradient-custom btn-login justify-content-center align-items-center">Cadastrar</button>
-
-        </form>
-
-        <div class="mt-5 h-100 d-flex justify-content-center align-items-center">
-            <a href="/">
-                <i class="bi bi-house gradient-custom p-2 rounded"></i>
-            </a>
-        </div>
-
         
         </div>
     </div>
