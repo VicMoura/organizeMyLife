@@ -1,24 +1,35 @@
 <%- include ('../../partials/header.ejs') %> 
-<%- include ('../../partials/telaInicial.ejs') %> 
-
-        <div class="w-50 bg-white shadow-lg p-3 mb-1 rounded d-flex flex-column">
-                <div class="pt-5 h-70 ">
-                    <div class="d-flex justify-content-center mt-2">
-                        <h2>Organize My Life</h2>
-                    </div>
-                    <h6 class="text-center">SEU ORGANIZADOR DE TAREFAS FAVORITO</h6>
+<section class="vh-100 gradient-form section-small" style="background-color: #eee;"> 
+    <div class="container py-5 h-100 d-flex flex-row">
+                <div class="w-50 gradient-custom shadow-lg p-3 mb-1 rounded row align-items-center">
+                        <div class="col mx-auto text-center">
+                            <img src="logo.png" class="img-fluid mw-100 h-auto" >
+                        </div>
                 </div>
 
-                <form method="POST" action="/validarCodigo">
-                    <div class="form-outline text-center mx-5 mt-5 px-5">
+    <div class="w-50 bg-white shadow-lg pt-5 mb-1 rounded d-flex flex-column align-items-center">
+            <div class="pt-5 h-70 ">
+                <div class="d-flex justify-content-center mt-2">
+                    <h2>Recuperar Senha</h2>
+                </div>
+            </div>
+
+                <form method="POST" action="/validarCodigo" class="form-login mb-5">
+                    <div class="form-outline text-start  mt-5 px-3">
                         <label >Insira o codigo enviado para o email</label>
-                        <input type="number" class="form-control mt-3  px-5 " name="codigoInserido">
-                        <input type="hidden" class="form-control mt-3  px-5 " name="codigoEmail" value="<%=codigoEmail%>">
+                        <input type="number" class="form-control  px-5 " name="codigoInserido">
+                        <input type="hidden" class="form-control  px-5 " name="codigoEmail" value="<%=codigoEmail%>">
                     </div>
 
-                    <button type="submit" class="btn  mt-3 d-flex mx-auto gradient-custom btn-login justify-content-center align-items-center">Enviar</button>
+                    <button type="submit" class="btn mb-4 mt-4 d-flex mx-auto gradient-custom btn-login justify-content-center align-items-center">Enviar</button>
 
                 </form>
+
+                <div class="mt-5 h-100 d-flex justify-content-center align-items-center p-4">
+                    <a href="/">
+                        <i class="bi bi-house gradient-custom p-2 rounded"></i>
+                    </a>
+                </div>
 
                 
                 </div>
