@@ -1,31 +1,5 @@
 <%- include ('../../partials/header.ejs') %> 
-
-<section class="vh-100 gradient-form" style="background-color: #eee;"> 
-    <div class="container py-4 h-100 d-flex flex-row">
-                <div class="gradient-custom-2 shadow-lg  mb-1 rounded row  menuLateral">
-                        <div class="d-flex flex-column justify-content-start p-0">
-                            <div class="pt-3 ml-2 mt-5">
-                                <a href="/user">
-                                    <i class="bi bi-person-circle mx-3"></i>
-                                </a>
-                               </div>
-    
-                               <div class="pt-3 ml-2 mt-5">
-                                <a href="/tarefas">
-                                    <i class="bi bi-card-checklist mx-3"></i>
-                                </a>
-                               </div>
-    
-                                
-                               <div class="pt-3 ml-2 mt-auto mb-5">
-                                <a href="/logout">
-                                    <i class="bi bi-box-arrow-right mx-3"></i>
-                                </a>
-                               </div>
-                       
-
-                        </div>
-                </div>
+<%- include ('../../partials/telaAdmin.ejs') %> 
 
     
             <div class="w-100 bg-white shadow-lg mb-1 rounded  overflow-auto">
@@ -53,7 +27,7 @@
                                             
                                             <a class="link" href="/viewTarefa/<%=tarefa.id%>">
                                             
-                                                <div class="card-tarefa mt-3 mb-3 text-center mx-3 shadow-lg rounded gradient-custom-2 ">
+                                                <div class="card-tarefa mt-3 mb-3 text-center mx-3 shadow-lg rounded">
                                                     <div class="pt-3 px-4">
                                                         <h4 class="nome-Tarefa" style="color : white"><%= tarefa.nome.toUpperCase() %></h4>
                                                     </div>
