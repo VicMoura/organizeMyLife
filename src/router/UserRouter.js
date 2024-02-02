@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs"); 
 const User = require("../model/User");
 const nodemailer = require("nodemailer");
+const Swal = require('sweetalert2')
 
 //Criando o transporter do nodemailer 
 let transporter = nodemailer.createTransport({
@@ -49,14 +50,14 @@ router.post('/cadastro/usuario', (req, res) => {
                     email : email, 
                     senha : hash
                 }).then(() => {
-                    res.redirect("/"); 
+                    res.send('<script>alert("Usuário criado com sucesso!"); window.location.href = "/login"; </script>');
                 }).catch((erro) => {
                     console.log(erro);
                     res.redirect("/"); 
                 });
     
             }else {
-                res.redirect("/"); 
+                res.send('<script>alert("Usuário já existe!"); window.location.href = "/cadastro"; </script>');
             }
     
         }).catch((erro) => {
@@ -96,11 +97,11 @@ router.post('/autenticacao', (req, res) => {
                     res.redirect('/tarefas'); 
     
                 }else {
-                    res.redirect('/login'); 
+                    res.send('<script>alert("Email ou senha inválidos!"); window.location.href = "/login"; </script>');
                 }
     
             }else{
-                res.redirect('/login'); 
+                res.send('<script>alert("Usuário não existe!"); window.location.href = "/login"; </script>');
             }
     
         }).catch((erro) => {
@@ -124,6 +125,9 @@ router.get("/recuperarSenha", (req, res) => {
     res.render('templates/users/recuperarSenha'); 
 });
 
+router.get("/redefinirSenha", (req, res) => {
+    res.render('templates/users/redefinirSenha'); 
+});
 
 router.post("/enviarCodigoEmail", (req, res) => {
 
@@ -164,7 +168,9 @@ router.post("/validarCodigo", (req, res) => {
     let codigoInserido = req.body.codigoInserido;
 
     if(codigo == codigoInserido){
-        res.render('templates/users/redefinirSenha'); 
+        res.send('<script>alert("Código validado, digite a nova senha!"); window.location.href = "/redefinirSenha"; </script>');
+    }else{
+        res.send('<script>alert("Código Inválido!"); window.location.href = "/recuperarSenha"; </script>');
     }
 
     
@@ -185,7 +191,7 @@ router.post("/redefinirSenha", (req, res) => {
                 id : id
             }
         }).then(() => {
-            res.redirect('/login');
+            res.send('<script>alert("Senha redefinida com sucesso!"); window.location.href = "/login"; </script>');
         })
     
 
